@@ -10,7 +10,10 @@
     <% @list.bookmarks.each do |bookmark| %>
       <li class="list-group-item d-flex justify-content-between align-items-center">
         <span>
-          <strong><%= bookmark.movie.title %></strong> — <%= bookmark.comment %>
+        <img src="<%= bookmark.movie.poster_url.presence || asset_path('default_movie.jpg') %>" <%# affiche l'affiche du film si dispo dans la db, sinon une image par défaut %>
+              alt="<%= bookmark.movie.title %>"
+             class="movie-thumbnail">
+          <strong class="ms-2"><%= bookmark.movie.title %></strong> — <%= bookmark.comment %>
         </span>
         <%= link_to "Remove", bookmark_path(bookmark), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
       </li>

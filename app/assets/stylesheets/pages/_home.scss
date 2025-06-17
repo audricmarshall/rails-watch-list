@@ -1,1 +1,10 @@
 // Specific CSS for your home-page
+
+.movie-thumbnail {
+  height: 200px;
+  border-radius: 8px;
+  margin-right: 12px;
+  object-fit: cover;
+  display: flex;
+  align-items: center
+}
