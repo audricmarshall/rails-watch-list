@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  root to: "list#index" # on root direct vers la page index pour éviter la page rails
+  root to: "lists#index" # on root direct vers la page index pour éviter la page rails
   # je declare les routes avec resources pour les listes
   resources :lists, only: %i[index show new create] do
     # je nest les routes bookmarks dans une liste
