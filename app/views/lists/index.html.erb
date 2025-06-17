@@ -1,2 +1,15 @@
-<h1>Lists#index</h1>
+<%# <h1>Lists#index</h1>
 <p>Find me in app/views/lists/index.html.erb</p>
+ %>
+
+ <div class="container my-5">
+  <h1 class="mb-4">My Watchlist</h1>
+  <ul class="list-group shadow-sm">
+    <% @lists.each do |list| %>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <%= link_to list.name, list_path(list), class: "fw-bold" %>
+        <i class="fa-solid fa-chevron-right"></i>
+      </li>
+    <% end %>
+  </ul>
+</div>

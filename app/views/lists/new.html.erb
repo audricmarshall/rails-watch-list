@@ -1,2 +1,16 @@
-<h1>Lists#new</h1>
+<%# <h1>Lists#new</h1>
 <p>Find me in app/views/lists/new.html.erb</p>
+ %>
+
+ <div class="container my-5">
+  <h1 class="mb-4">Create a new list</h1>
+  <div class="card p-4">
+    <%= simple_form_for @list do |f| %>
+      <%= f.input :name, label: "List name" %>
+      <%= f.submit "Create list", class: "btn btn-primary mt-2" %>
+    <% end %>
+  </div>
+  <div class="mt-3">
+    <%= link_to "Back to home", lists_path, class: "btn btn-secondary" %>
+  </div>
+</div>

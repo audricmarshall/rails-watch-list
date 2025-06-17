@@ -14,9 +14,9 @@ class BookmarksController < ApplicationController
     @bookmark = Bookmark.new(bookmark_params)
     @bookmark.list = @list
     if @bookmark.save
-      redirect_to list_path(@list)
+      redirect_to list_path(@list), notice: 'Successfully added!'
     else
-      render :new, status: :unprocessable_entity
+      render 'lists/show', status: :unprocessable_entity
     end
   end
 
