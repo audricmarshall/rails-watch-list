@@ -1,0 +1,69 @@
+<%# <h1>Movies#preview</h1>
+<p>Find me in app/views/movies/preview.html.erb</p> %>
+
+<div class="movie-preview-container container py-5">
+  <div class="row align-items-center">
+    <div class="col-lg-5 text-center mb-4 mb-lg-0">
+      <img src="<%= @movie.poster_url.presence || asset_path('default_movie.jpg') %>"
+           alt="<%= @movie.title %>"
+           class="movie-preview-poster img-fluid rounded-4 shadow-lg" />
+    </div>
+    <div class="col-lg-7">
+      <h1 class="display-4 fw-bold mb-3"><%= @movie.title %></h1>
+      <% if @movie.rating.present? %>
+        <p class="h5 mb-4 text-warning fw-semibold">
+          <span class="star fs-4 align-middle">★</span> <%= @movie.rating %>/10
+        </p>
+      <% end %>
+      <p class="lead text-secondary mb-4"><%= @movie.overview %></p>
+      <div>
+        <%= link_to 'Back to lists', lists_path, class: 'btn btn-outline-secondary px-4 me-2 mb-2' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="comments-section mt-5 px-md-4">
+    <h2 class="h4 mb-3 fw-bold">Reviews & Comments</h2>
+    <%= simple_form_for([@movie, @review], html: { class: 'review-form' }) do |f| %>
+      <div class="row g-2 align-items-end">
+        <div class="col-12 col-md-8">
+          <%= f.input :content, as: :text, input_html: { rows: 2, class: "form-control rounded-3", placeholder: "Tell us what you think of this movie..." }, label: false %>
+        </div>
+        <div class="col-6 col-md-2">
+          <%= f.input :rating, as: :integer, input_html: { min: 1, max: 10, class: "form-control text-center", placeholder: "10" }, label: "Rate (/10)" %>
+        </div>
+        <div class="col-6 col-md-2 d-grid">
+          <%= f.button :submit, "Submit", class: "btn btn-success btn-lg px-4 rounded-3" %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if @review && @review.errors.any? %>
+      <div class="alert alert-danger mt-2">
+        <ul class="mb-0">
+          <% @review.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <% if @movie.reviews.any? %>
+      <ul class="list-unstyled comments-list mt-4">
+        <% @movie.reviews.order(created_at: :desc).each do |review| %>
+          <li class="comment-card mb-3 p-3 rounded-3 shadow-sm bg-white">
+            <div class="d-flex align-items-center mb-2">
+              <% if review.rating.present? %>
+                <span class="badge bg-warning text-dark me-2 px-2 py-1 fs-6">⭐ <%= review.rating %>/10</span>
+              <% end %>
+              <small class="text-muted"><%= time_ago_in_words(review.created_at) %> ago</small>
+            </div>
+            <div class="text-body mb-1"><%= review.content %></div>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-muted mt-3">No reviews yet. Be the first to comment!</p>
+    <% end %>
+  </div>
+</div>

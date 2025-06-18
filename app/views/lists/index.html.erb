@@ -2,14 +2,37 @@
 <p>Find me in app/views/lists/index.html.erb</p>
  %>
 
- <div class="container my-5">
-  <h1 class="mb-4">My Watchlist</h1>
-  <ul class="list-group shadow-sm">
-    <% @lists.each do |list| %>
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        <%= link_to list.name, list_path(list), class: "fw-bold" %>
-        <i class="fa-solid fa-chevron-right"></i>
-      </li>
-    <% end %>
-  </ul>
+ <div class="hero-header mb-5 p-5 rounded-4">
+  <h1 class="display-4 fw-bold mb-3">My Watchlist</h1>
+  <p class="lead mb-0">Save any kind of movies, with style.</p>
+</div>
+
+  <div class="container my-5 d-flex flex-column align-items-center">
+    <h2 class="mb-4">Your Lists</h2>
+     <div class="row gy-4 w-100 justify-content-center">
+        <% @lists.each do |list| %>
+          <div class="col-md-6 col-lg-4 d-flex">
+           <div class="card p-4 flex-fill d-flex flex-column align-items-start h-100 position-relative">
+              <h3 class="fw-bold mb-2"><%= link_to list.name, list_path(list), class: "stretched-link text-decoration-none text-dark" %></h3>
+                <span class="text-secondary mb-1">Movies: <%= list.bookmarks.count %></span>
+                <div class="mini-thumbnails d-flex gap-1 mt-2">
+                  <% list.bookmarks.limit(5).each do |bookmark| %>
+                    <img
+                      src="<%= bookmark.movie.poster_url.presence || asset_path('default_movie.jpg') %>"
+                      alt="<%= bookmark.movie.title %>"
+                      title="<%= bookmark.movie.title %>"
+                      class="mini-thumbnail">
+                      <% end %>
+                      <% if list.bookmarks.count > 5 %>
+                        <span class="small text-secondary align-self-center">+<%= list.bookmarks.count - 5 %></span>
+                      <% end %>
+                </div>
+                <i class="fa-solid fa-film chevron-absolute"></i>
+                </div>
+          </div>
+          <% end %>
+        </div>
+      <div class="mt-4">
+    <%= link_to "Create a new list", new_list_path, class: "btn btn-success" %>
+  </div>
 </div>

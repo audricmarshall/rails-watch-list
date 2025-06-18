@@ -2,15 +2,18 @@
 <p>Find me in app/views/lists/new.html.erb</p>
  %>
 
- <div class="container my-5">
-  <h1 class="mb-4">Create a new list</h1>
+ <div class="container my-5 new-list-container">
+  <div class="card p-5">
+  <h1 class="mb-4 fw-bold text-center">Create a new list</h1>
   <div class="card p-4">
     <%= simple_form_for @list do |f| %>
-      <%= f.input :name, label: "List name" %>
+      <%= f.input :name, label: "List name", input_html: { class: "form-control-lg" } %>
+      <div class="d-grid mt-4">
       <%= f.submit "Create list", class: "btn btn-primary mt-2" %>
+      </div>
     <% end %>
+  <div class="mt-3 text-center">
+    <%= link_to "Back to home", lists_path, class: "btn btn-outline-secondary" %>
   </div>
-  <div class="mt-3">
-    <%= link_to "Back to home", lists_path, class: "btn btn-secondary" %>
   </div>
 </div>
