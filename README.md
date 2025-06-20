@@ -46,3 +46,33 @@ Correction images films : les films utilisent maintenant poster_url (plus image_
 Routes REST : les avis sont gérés sous chaque film (/movies/:movie_id/reviews), la preview est accessible via /movies/:id/preview
 
 Barre de navigation (navbar) : boutons modernisés, nouveaux styles, totalement responsive
+
+DERNIER COMMIT 21/06/2025:
+
+Refonte complète du look de la navbar : dégradé stylé (jaune =>violet => bleu) pour ambiance ciné, fini le blanc triste
+
+Ajout d’un flou derrière la navbar (backdrop-filter) pour mieux voir le texte sur la vidéo et faire + pro
+
+Harmonisation des boutons partout : bouton principal (créer une liste) en jaune ciné, exit les vieux verts et bleus, résultat plus cohérent
+
+Style des cartes (listes, films) mis à jour : coins arrondis et ombres pour un rendu plus moderne et moins “flottant”
+
+Possibilité de mettre une image de couverture sur chaque liste, upload direct via Cloudinary (gem et config rails ajoutés)
+
+Champ de cover intégré au formulaire de création de liste, affichage en preview après upload (testé ok)
+
+Bordure jaune ajoutée en bas de la navbar pour rappel “ciné”
+
+Boutons de suppression rendus plus visibles (rouge + icône), effet au survol pour UX
+
+Hover et focus améliorés sur miniatures, liens, boutons… expérience plus fluide
+
+Gems dotenv et cloudinary installées, storage.yml modifié pour gestion cloud, params fixés dans le controller List pour l’image
+
+SCSS rangé par commoentaire et sections
+
+Responsive testé et validé via inspector
+
+Palette de couleurs harmonisée (jaune, violet, orange, bleu)t
+
+Ambiance générale : site qui fait “cinéphile”

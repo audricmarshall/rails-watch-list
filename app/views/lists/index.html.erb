@@ -13,26 +13,38 @@
         <% @lists.each do |list| %>
           <div class="col-md-6 col-lg-4 d-flex">
            <div class="card p-4 flex-fill d-flex flex-column align-items-start h-100 position-relative">
-              <h3 class="fw-bold mb-2"><%= link_to list.name, list_path(list), class: "stretched-link text-decoration-none text-dark" %></h3>
-                <span class="text-secondary mb-1">Movies: <%= list.bookmarks.count %></span>
-                <div class="mini-thumbnails d-flex gap-1 mt-2">
-                  <% list.bookmarks.limit(5).each do |bookmark| %>
-                    <img
-                      src="<%= bookmark.movie.poster_url.presence || asset_path('default_movie.jpg') %>"
-                      alt="<%= bookmark.movie.title %>"
-                      title="<%= bookmark.movie.title %>"
-                      class="mini-thumbnail">
-                      <% end %>
-                      <% if list.bookmarks.count > 5 %>
-                        <span class="small text-secondary align-self-center">+<%= list.bookmarks.count - 5 %></span>
-                      <% end %>
-                </div>
-                <i class="fa-solid fa-film chevron-absolute"></i>
-                </div>
-          </div>
+            <%= link_to list_path(list),
+              data: { turbo_method: :delete, turbo_confirm: "Delete this list?" },
+              class: "btn btn-outline-danger btn-sm btn-delete-list",
+              title: "Delete list" do %>
+              <i class="fa-solid fa-trash"></i>
+            <% end %>
+             <%# cloudinary uploading image %>
+                <% if list.photo.attached? %>
+                  <%= cl_image_tag(list.photo.key, width: 400, crop: :fill, class: "card-img-top rounded shadow mb-3", alt: "Cover #{list.name}") %>
+                <% else %>
+                  <%= image_tag asset_path("default_movie.jpg"), class: "card-img-top rounded shadow mb-3", alt: "No cover" %>
+                <% end %>
+                       <h3 class="fw-bold mb-2 btn btn btn-outline-info"><%= link_to list.name, list_path(list), class: "stretched-link text-decoration-none text-dark" %></h3>
+                        <span class="text-secondary mb-1"><strong>Movies: <%= list.bookmarks.count %></strong></span>
+                        <div class="mini-thumbnails d-flex gap-1 mt-2">
+                            <% list.bookmarks.limit(5).each do |bookmark| %>
+                            <img
+                            src="<%= bookmark.movie.poster_url.presence || asset_path('default_movie.jpg') %>"
+                            alt="<%= bookmark.movie.title %>"
+                            title="<%= bookmark.movie.title %>"
+                            class="mini-thumbnail">
+                          <% end %>
+                          <% if list.bookmarks.count > 5 %>
+                            <span class="small text-secondary align-self-center">+<%= list.bookmarks.count - 5 %></span>
+                          <% end %>
+                        </div>
+                      <i class="fa-solid fa-film chevron-absolute"></i>
+                  </div>
+              </div>
           <% end %>
         </div>
       <div class="mt-4">
-    <%= link_to "Create a new list", new_list_path, class: "btn btn-success" %>
+    <%= link_to "Create a new list", new_list_path, class: "btn btn-info" %>
   </div>
 </div>

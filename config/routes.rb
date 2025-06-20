@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   # root "posts#index"
   root to: 'lists#index' # on root direct vers la page index pour éviter la page rails
   # je declare les routes avec resources pour les listes
-  resources :lists, only: %i[index show new create] do
+  resources :lists, only: %i[index show new create destroy] do
     # je nest les routes bookmarks dans une liste
     resources :bookmarks, only: %i[new create]
   end

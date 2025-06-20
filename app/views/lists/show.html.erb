@@ -3,26 +3,54 @@
  %>
 
  <div class="container my-5">
-  <h2 class="mb-3">Movies in this list</h2>
-  <div class="row gy-4">
+  <% if @list.photo.attached? %>
+  <%= cl_image_tag(@list.photo.key, width: 800, height: 320, crop: :fill, class: "list-cover-img", alt: "#{@list.name}'s cover") %>
+  <% else %>
+  <%= image_tag asset_path("default_movie.jpg"), class: "list-cover-img", alt: "No images" %>
+  <% end %>
+
+<%# remplacé tout le bloc pour mettre des conditions si film non remplis ou autre avec mini card dans card %>
+<div class="main-movie-card card my-4 p-5 text-center d-flex flex-column align-items-center">
+  <% if @list.bookmarks.empty? %>
+    <i class="fa-solid fa-film fa-3x mb-3 text-secondary"></i>
+    <h3 class="mb-3 text-secondary">No movies yet…</h3>
+    <p>Add your first movie below!</p>
+  <% else %>
+    <h2 class="mb-4 text-start w-100">Movies in this list</h2>
+    <div class="d-flex flex-wrap justify-content-center gap-4 w-100">
       <% @list.bookmarks.each do |bookmark| %>
-       <div class="col-md-6 col-lg-4">
-        <div class="card d-flex flex-row align-items-center">
-          <div class="movie-poster me-3">
-             <%= link_to preview_movie_path(bookmark.movie) do %>
-               <img src="<%= bookmark.movie.poster_url.presence || asset_path('default_movie.jpg') %>"
-                    alt="<%= bookmark.movie.title %>" class="img-fluid movie-thumbnail" />
-             <% end %>
-             </div>
-                <div>
-                  <h5 class="mb-1"><%= bookmark.movie.title %></h5>
-                  <div class="mb-2"><%= bookmark.comment %></div>
-                  <%= link_to "Remove", bookmark_path(bookmark), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
-              </div>
+        <div class="mini-movie-card card p-3 d-flex flex-row align-items-center" style="min-width:270px;max-width:340px;">
+          <div class="movie-poster me-3" style="cursor:pointer;">
+            <%= link_to preview_movie_path(bookmark.movie) do %>
+              <img src="<%= bookmark.movie.poster_url.presence || asset_path('default_movie.jpg') %>"
+                   alt="<%= bookmark.movie.title %>" class="img-fluid movie-thumbnail" />
+            <% end %>
+            <div class="preview-hint mt-2">
+              <i class="fa-solid fa-eye me-1"></i>
+              <span>Click on the image to see the preview</span>
+           </div>
+           </div>
+           <div class="text-center w-100 mb-2">
+            <h5 class="mb-1"><%= bookmark.movie.title %></h5>
+            <% if bookmark.comment.present? %>
+            <blockquote class="movie-quote mb-2 mt-auto">
+              <i class="fa-solid fa-quote-left me-2 text-dark opacity-75"></i>
+              <span><%= bookmark.comment %></span>
+            </blockquote>
+            <% end %>
+            <div class="d-flex justify-content-center w-100 mt-3">
+            <%= link_to bookmark_path(bookmark), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger btn-sm btn-delete-list" do %>
+            <i class="fa-solid fa-trash"></i>
+            <% end %>
+            </div>
           </div>
-      </div>
-    <% end %>
-  </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+</div>
+
 
   <div class="card p-4 mb-4">
     <h2 class="mb-3">Add a movie to this list</h2>

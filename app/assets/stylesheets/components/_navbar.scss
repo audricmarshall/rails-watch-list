@@ -1,6 +1,5 @@
 .navbar-lewagon {
   justify-content: space-between;
-  background: white;
 }
 
 .navbar-lewagon .navbar-collapse {
@@ -9,4 +8,44 @@
 
 .navbar-lewagon .navbar-brand img {
   width: 40px;
+}
+/* navbar gradient sur les deux selecteurs dans le ton du jaune */
+.navbar-lewagon, .navbar {
+  background: linear-gradient(
+    90deg,
+    #f7b801 0%,
+    #ffd566 20%,
+    #ff8b2b 40%,
+    #f35626 60%,
+    #b05cff 85%,
+    #6560fe 100%
+  ) !important;
+  color: #23272f;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 24px rgba(0,0,0,0.09);
+  border-bottom: 4px solid #f7b801;
+}
+
+/* couleur du texte, la garder sombre */
+.navbar-lewagon .navbar-brand,
+.navbar-lewagon .navbar-brand span,
+.navbar-lewagon .btn,
+.navbar-lewagon .btn-ghost {
+  color: #23272f !important;
+}
+
+/* hover sur les textes */
+
+.navbar-lewagon a:hover,
+.navbar-lewagon .active {
+  color: #fff !important;
+  text-shadow: 0 0 8px #f7b80199, 0 2px 6px #fff2;
+}
+
+/* hover sur .navbar */
+
+.navbar a:hover,
+.navbar .active {
+  color: #f7b801 !important;
+  text-shadow: 0 2px 6px rgba(247,184,1,0.08);
 }
